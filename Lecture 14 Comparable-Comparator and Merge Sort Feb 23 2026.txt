@@ -1,0 +1,86 @@
+Welcome to COMS 2280!
+=================
+----------
+Merge Sort  
+----------
+Algorithm Type
+	Recursive -- calls itself
+	Lazy -- saves work for the processor by deferring 
+	or eliminating steps. This is a compliment in 
+	the world of algorithms.
+
+Algorithm Intuition
+0. Termination condition
+	cannot sort an array of size 1 or less: 
+	it is already sorted.
+
+Otherwise, find the midpoint index in the 
+		current array, and split it into 
+		two halves; and call yourself on both.
+		
+		Somehow they come back sorted. 
+		Merge two sorted half-arrays into a 
+		correctly sorted full array
+Algorithm code
+
+MERGESORT (A)			Big-O analysis:
+	n = A.length  		
+	if n ≤ 1 return  
+	m = n/2
+	B = [A_0......A_m]    
+	C = [A_m+1.....A_n-1]  
+	B = MERGESORT(B)       
+	C = MERGESORT(C)			
+	A = MERGE(B, C)		//merge dominates the Big-o
+						//and it is in O(n)
+	return A
+
+
+Merge() algorithm:
+	Starting with two sorted subarrays B and C:
+	run two loops in parallel comparing 
+	elements B[i] to C[j].  Whichever is smaller,
+	append to output:
+		D[i+j] = C[j] if it is smaller; j++
+		
+	At some point, we exhaust one of the two
+arrays.  
+
+	We append the remaining elements from the 
+	other array with a new loop.
+
+MERGE(B,C)  O(n)
+	p = B.length, q = C.length  
+	create an empty array D of length p+q
+	i=0, j=0, k=0
+	while i < p && j < q   T(n) is n/2 to n-1 
+		if B[i] ≤ C[j] 		  
+			D[i+j] = B[i]   
+			i++               
+		else
+			D[i+j] = C[j] 
+			j++
+	if i ≥ p				  T(n) is 1 to n/2
+		append C[j],...,C[q-1] to D			
+	else							
+		append B[i],...,B[p-1] to D
+	return D
+
+
+Big-O Analysis of number of execution steps needs to include method call history
+
+
+O(n) work per level of recursion to merge elements,
+
+We need to determine the recursion depth k:
+
+
+Starting with n elements, we have to divide by 2 
+k times to end with a parameter of size 1 
+
+n/2^k = 1
+k = logn.
+
+Total performance: O(nlogn) envelope.
+
+
