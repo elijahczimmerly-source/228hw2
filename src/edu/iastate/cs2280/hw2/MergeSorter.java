@@ -7,7 +7,7 @@ import java.util.InputMismatchException;
 
 /**
  *  
- * @author
+ * @author Elijah Zimmerly
  *
  */
 
@@ -29,7 +29,8 @@ public class MergeSorter extends AbstractSorter
 	 */
 	public MergeSorter(Point[] pts) 
 	{
-		// TODO  
+		super(pts);
+		algorithm = "mergesort";
 	}
 
 

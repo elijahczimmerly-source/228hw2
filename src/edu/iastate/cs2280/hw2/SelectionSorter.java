@@ -8,7 +8,7 @@ import java.util.InputMismatchException;
 
 /**
  *  
- * @author
+ * @author Elijah Zimmerly
  *
  */
 
@@ -30,7 +30,8 @@ public class SelectionSorter extends AbstractSorter
 	 */
 	public SelectionSorter(Point[] pts)  
 	{
-		// TODO 
+		super(pts);
+		algorithm = "selection sort";
 	}	
 
 	

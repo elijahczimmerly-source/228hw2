@@ -2,12 +2,15 @@ package edu.iastate.cs2280.hw2;
 
 /**
  * 
- * @author 
+ * @author Elijah Zimmerly
  *
  */
 
 import java.io.FileNotFoundException;
 import java.util.InputMismatchException;
+import java.io.File;
+import java.util.Scanner;
+import java.util.ArrayList;
 
 
 /**
@@ -38,7 +41,14 @@ public class PointScanner
 	 */
 	public PointScanner(Point[] pts, Algorithm algo) throws IllegalArgumentException
 	{
-		
+		sortingAlgorithm = algo;
+		if(pts == null || pts.length == 0) {
+			throw new IllegalArgumentException();
+		}
+		points = new Point[pts.length];
+		for(int i = 0; i < pts.length; i++) {
+			points[i] = pts[i];
+		}
 	}
 
 	
@@ -51,7 +61,24 @@ public class PointScanner
 	 */
 	protected PointScanner(String inputFileName, Algorithm algo) throws FileNotFoundException, InputMismatchException
 	{
-		// TODO
+		sortingAlgorithm = algo;
+		try (Scanner scnr = new Scanner(new File(inputFileName))) {
+			ArrayList<Point> ptsList = new ArrayList<>();
+			while(scnr.hasNextInt()){
+				int x = scnr.nextInt();
+				int y;
+				if (scnr.hasNextInt()){
+					y = scnr.nextInt();
+				}
+				else {
+					throw new InputMismatchException();
+				}
+				ptsList.add(new Point(x,y));
+			}
+			//toArray() is more efficient than creating copying the ArrayList into the array yourself, because java can handle the allocating. 
+			//Since toArray() predates generics, it requires an instance of the return type you want. Length 0 is the cheapest way of doing this.
+			points = ptsList.toArray(new Point[0]);
+		}
 	}
 
 	

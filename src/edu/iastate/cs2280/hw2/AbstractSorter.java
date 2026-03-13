@@ -2,7 +2,7 @@ package edu.iastate.cs2280.hw2;
 
 /**
  *  
- * @author
+ * @author Elijah Zimmerly
  *
  */
 
@@ -47,7 +47,13 @@ public abstract class AbstractSorter
 	 */
 	protected AbstractSorter(Point[] pts) throws IllegalArgumentException
 	{
-		// TODO 
+		if (pts == null || pts.length == 0) {
+			throw new IllegalArgumentException();
+		}
+		points = new Point[pts.length];
+		for(int i = 0; i < pts.length; i++) {
+			points[i] = pts[i];
+		}
 	}
 
 		
@@ -70,7 +76,15 @@ public abstract class AbstractSorter
 	 */
 	public void setComparator(int order) throws IllegalArgumentException
 	{
-		// TODO 
+		if(order == 0) {
+			pointComparator = new XComparator();
+		}
+		else if (order == 1) {
+			pointComparator = new YComparator();
+		}
+		else {
+			throw new IllegalArgumentException();
+		}
 	}
 
 	
@@ -101,7 +115,10 @@ public abstract class AbstractSorter
 	 */
 	public void getPoints(Point[] pts)
 	{
-		// TODO 
+		pts = new Point[points.length];
+		for(int i = 0; i < points.length; i++) {
+			pts[i] = points[i];
+		}
 	}
 	
 
@@ -113,6 +130,8 @@ public abstract class AbstractSorter
 	 */
 	protected void swap(int i, int j)
 	{
-		// TODO 
+		Point temp = points[i];
+		points[i] = points[j];
+		points[j] = temp;
 	}	
 }

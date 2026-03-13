@@ -8,7 +8,7 @@ import java.util.InputMismatchException;
 
 /**
  *  
- * @author
+ * @author Elijah Zimmerly
  *
  */
 
@@ -31,7 +31,8 @@ public class QuickSorter extends AbstractSorter
 	 */
 	public QuickSorter(Point[] pts)
 	{
-		// TODO 
+		super(pts);
+		algorithm = "quicksort";
 	}
 		
 

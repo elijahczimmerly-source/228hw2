@@ -2,7 +2,7 @@
 
 /**
  *  
- * @author
+ * @author Elijah Zimmerly
  *
  */
 
@@ -17,6 +17,8 @@ public class Point implements Comparable<Point>
 	public Point()  // default constructor
 	{
 		// x and y get default value 0
+		x = 0;
+		y = 0;
 	}
 	
 	public Point(int x, int y)
@@ -46,7 +48,7 @@ public class Point implements Comparable<Point>
 	 */
 	public static void setXorY(boolean xORy)
 	{
-		// TODO 
+		Point.xORy = xORy;
 	}
 	
 	
@@ -72,8 +74,29 @@ public class Point implements Comparable<Point>
 	 */
 	public int compareTo(Point q)
 	{
-		return 0; 
-		// TODO; 
+		if (xORy) {
+			if(this.x < q.x || (this.x == q.x && this.y < q.y)) {
+				return -1;
+			}
+			else if(this.x == q.x && this.y == q.y) {
+				return 0;
+			}
+			else {
+				return 1;
+			}
+		}
+		else {
+			if(this.y < q.y || (this.y == q.y && this.x < q.x)) {
+				return -1;
+			}
+			else if(this.y == q.y && this.x == q.x) {
+				return 0;
+			}
+			else {
+				return 1;
+			}
+		}
+		 
 	}
 	
 	
@@ -83,7 +106,6 @@ public class Point implements Comparable<Point>
 	@Override
     public String toString() 
 	{
-		// TODO 
-		return null; 
+		return ("(" + x + ", " + y + ")");
 	}
 }
