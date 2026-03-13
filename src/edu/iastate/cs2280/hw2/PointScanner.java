@@ -96,8 +96,28 @@ public class PointScanner
 	 */
 	public void scan()
 	{
-		// TODO  
 		AbstractSorter aSorter; 
+		switch(sortingAlgorithm) {
+			case Algorithm.SelectionSort:
+				aSorter = new SelectionSorter(points);
+			case Algorithm.InsertionSort:
+				aSorter = new SelectionSorter(points);
+			case Algorithm.MergeSort:
+				aSorter = new SelectionSorter(points);
+			case Algorithm.QuickSort:
+				aSorter = new SelectionSorter(points);		
+		}
+		
+		aSorter.setComparator(0);
+		aSorter.sort();
+		Point mcp = aSorter.getMedian();
+		medianCoordinatePoint = new Point(mcp.getX(), mcp.getY());
+		
+		aSorter.setComparator(1);
+		aSorter.sort();
+		Point mcp = aSorter.getMedian();
+		medianCoordinatePoint = new Point(mcp.getX(), mcp.getY());
+		
 		
 		// create an object to be referenced by aSorter according to sortingAlgorithm. for each of the two 
 		// rounds of sorting, have aSorter do the following: 
