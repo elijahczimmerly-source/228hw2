@@ -29,9 +29,7 @@ public class CompareSorters
 	 * @param args
 	 **/
 	public static void main(String[] args) throws FileNotFoundException
-	{		
-		// TODO 
-		// 
+	{		 
 		// Conducts multiple rounds of comparison of four sorting algorithms.  Within each round, 
 		// set up scanning as follows: 
 		// 
@@ -43,7 +41,49 @@ public class CompareSorters
 		//       of the Algorithm type:  SelectionSort, InsertionSort, MergeSort and QuickSort. 
 		// 
 		// 	
-		PointScanner[] scanners = new PointScanner[4]; 
+		Scanner scnr = new Scanner(System.in);
+		PointScanner[] scanners = new PointScanner[4];
+		System.out.println("keys:  1 (random integers)  2 (file input)  3 (exit)");
+		int key = 0;
+		int trial = 1;
+		while(key != 3) {
+			System.out.print("Trial " + trial + ": ");
+			key = scnr.nextInt();
+			
+			if(key == 1) {
+				System.out.println("Points from a file");
+				System.out.print("File name: ");
+				String fileName = scnr.next();
+				for(int i = 0; i < 4; i++) {
+					scanners[i] = new PointScanner(fileName, Algorithm.values()[i]);
+				}
+			}
+			else if(key == 2) {
+				System.out.print("Enter number of random points: ");
+				int numPts = scnr.nextInt();
+				Point[] pts = generateRandomPoints(numPts, new Random());
+				for(int i = 0; i < 4; i++) {
+					scanners[i] = new PointScanner(pts, Algorithm.values()[i]);
+				}
+			}
+			else if(key == 3) {
+				break;
+			}
+			else {
+				System.out.println("Invalid input!");
+			}
+			
+			System.out.println("\nalgorithm   size  time (ns)\n----------------------------------");
+			for(PointScanner ptScnr : scanners) {
+				ptScnr.scan();
+				System.out.println(ptScnr.stats());
+			}
+			System.out.println("----------------------------------\n");
+			
+			trial++;
+		}
+		scnr.close();
+		 
 		
 		// For each input of points, do the following. 
 		// 
@@ -73,8 +113,13 @@ public class CompareSorters
 	 */
 	public static Point[] generateRandomPoints(int numPts, Random rand) throws IllegalArgumentException
 	{ 
-		return null; 
-		// TODO 
+		Point[] pts = new Point[numPts];
+		for(int i = 0; i < numPts; i++) {
+			int randX = rand.nextInt(101) - 50;
+			int randY = rand.nextInt(101) - 50;
+			pts[i] = new Point(randX, randY);
+		}
+		return pts;
 	}
 	
 }
