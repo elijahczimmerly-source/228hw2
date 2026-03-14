@@ -11,6 +11,7 @@ import java.util.InputMismatchException;
 import java.io.File;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.PrintWriter;
 
 
 /**
@@ -96,29 +97,6 @@ public class PointScanner
 	 */
 	public void scan()
 	{
-		AbstractSorter aSorter; 
-		switch(sortingAlgorithm) {
-			case Algorithm.SelectionSort:
-				aSorter = new SelectionSorter(points);
-			case Algorithm.InsertionSort:
-				aSorter = new SelectionSorter(points);
-			case Algorithm.MergeSort:
-				aSorter = new SelectionSorter(points);
-			case Algorithm.QuickSort:
-				aSorter = new SelectionSorter(points);		
-		}
-		
-		aSorter.setComparator(0);
-		aSorter.sort();
-		Point mcp = aSorter.getMedian();
-		medianCoordinatePoint = new Point(mcp.getX(), mcp.getY());
-		
-		aSorter.setComparator(1);
-		aSorter.sort();
-		Point mcp = aSorter.getMedian();
-		medianCoordinatePoint = new Point(mcp.getX(), mcp.getY());
-		
-		
 		// create an object to be referenced by aSorter according to sortingAlgorithm. for each of the two 
 		// rounds of sorting, have aSorter do the following: 
 		// 
@@ -131,6 +109,28 @@ public class PointScanner
 		//     d) set the medianCoordinatePoint reference to the object with the correct coordinates.
 		//
 		//     e) sum up the times spent on the two sorting rounds and set the instance variable scanTime. 
+		
+		AbstractSorter aSorter = switch(sortingAlgorithm) {
+			case SelectionSort -> new SelectionSorter(points);
+			case InsertionSort -> new InsertionSorter(points);
+			case MergeSort     -> new MergeSorter(points);
+			case QuickSort     -> new QuickSorter(points);
+		};
+		
+		long startTime = System.nanoTime();
+		
+		aSorter.setComparator(0);
+		aSorter.sort();
+		int mcpX = aSorter.getMedian().getX();
+		
+		aSorter.setComparator(1);
+		aSorter.sort();
+		int mcpY = aSorter.getMedian().getY();
+		
+		medianCoordinatePoint = new Point(mcpX, mcpY);
+		
+		long endTime = System.nanoTime();
+		scanTime = endTime - startTime;
 		
 	}
 	
@@ -148,8 +148,7 @@ public class PointScanner
 	 */
 	public String stats()
 	{
-		return null; 
-		// TODO 
+		return String.format("%-18s %-6d %-10d", sortingAlgorithm.name(), points.length, scanTime);
 	}
 	
 	
@@ -160,8 +159,7 @@ public class PointScanner
 	@Override
 	public String toString()
 	{
-		return null; 
-		// TODO
+		return "MCP: (" + medianCoordinatePoint.getX() + ", " + medianCoordinatePoint.getY() + ")";
 	}
 
 	
@@ -175,7 +173,11 @@ public class PointScanner
 	 */
 	public void writeMCPToFile() throws FileNotFoundException
 	{
-		// TODO 
+		String outputFileName = "MCP.txt";
+		File file = new File(outputFileName);
+		PrintWriter writer = new PrintWriter(file);
+		writer.println(toString());
+		writer.close();
 	}	
 
 	
